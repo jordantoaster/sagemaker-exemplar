@@ -1,0 +1,5 @@
+sagemaker
+sklearn
+boto3
+pandas
+sagemaker[local] --upgrade

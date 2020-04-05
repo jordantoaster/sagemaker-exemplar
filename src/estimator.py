@@ -3,6 +3,7 @@ import sagemaker
 from sagemaker import get_execution_role
 import boto3
 import os
+import sys
 
 def get_session_and_role():
 
@@ -20,8 +21,7 @@ def get_session_and_role():
 
 # Get session and role
 session, role = get_session_and_role()
-
-script_path = 'model_logic.py'
+script_path = os.path.join(sys.path[0], 'train_and_deploy.py')
 
 # Uncomment the session code to run in AWS, while also picking a suitable instance size rather than local.
 sklearn = SKLearn(
@@ -31,5 +31,5 @@ sklearn = SKLearn(
     # sagemaker_session=session,
     hyperparameters={'max_leaf_nodes': 30})
 
-sklearn.fit({'train': train_input})
+sklearn.fit({'train': os.environ['S3_TRAINING_DATA']})
 
